@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
 @RestController
-@RequestMapping("api/repartition")
+@RequestMapping("api/")
 public class RepartitionController {
     @Autowired
     RepartitionService repartitionService;

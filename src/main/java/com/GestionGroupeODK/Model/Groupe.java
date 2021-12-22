@@ -2,6 +2,7 @@ package com.GestionGroupeODK.Model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.lang.reflect.Type;
 import java.util.Collection;
 
 @Entity
@@ -12,10 +13,11 @@ public class Groupe implements Serializable {
     private Long idGroupe;
     private int num;
     private String tache;
-    @OneToMany(mappedBy = "groupe")
+    @ManyToMany(cascade =CascadeType.ALL)
+    @JoinTable(name = "listGroupe")
     private Collection<Apprenant> apprenant;
-    @OneToMany(mappedBy ="groupe" )
-    private Collection<Repartition> repartition;
+    @ManyToOne(cascade=CascadeType.ALL )
+    private Repartition repartition;
     public Groupe() {
     }
 
@@ -31,7 +33,7 @@ public class Groupe implements Serializable {
         return num;
     }
 
-    public void setNum(int nom) {
+    public void setNum(int num) {
         this.num = num;
     }
 
@@ -51,11 +53,11 @@ public class Groupe implements Serializable {
         this.apprenant = apprenant;
     }
 
-    public Collection<Repartition> getRepartition() {
+    public Repartition getRepartition() {
         return repartition;
     }
 
-    public void setRepartition(Collection<Repartition> repartition) {
+    public void setRepartition(Repartition repartition) {
         this.repartition = repartition;
     }
 }

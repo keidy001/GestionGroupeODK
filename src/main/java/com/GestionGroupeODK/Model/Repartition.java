@@ -14,17 +14,14 @@ public class Repartition implements Serializable {
     private String nom;
     @Column(nullable = false)
     private Date date;
-    @Column(nullable = false)
     private OrdreRepartition ordreRepartition;
-    @Column(nullable = false)
     private TypeRepartition typeRepartition;
     @Column(nullable = false)
     private int nombre;
-    @ManyToOne()
-    @JoinColumn(name = "groupe")
-    private Groupe groupe;
-    @ManyToMany
-    private Collection<Apprenant> apprenants;
+    @OneToMany(mappedBy = "repartition",cascade=CascadeType.ALL)
+
+    private Collection<Groupe> groupe;
+
     public Repartition() {
     }
 
@@ -52,20 +49,12 @@ public class Repartition implements Serializable {
         this.date = date;
     }
 
-    public Groupe getGroupe() {
+    public Collection<Groupe> getGroupe() {
         return groupe;
     }
 
-    public void setGroupe(Groupe groupe) {
+    public void setGroupe(Collection<Groupe> groupe) {
         this.groupe = groupe;
-    }
-
-    public Collection<Apprenant> getApprenants() {
-        return apprenants;
-    }
-
-    public void setApprenants(Collection<Apprenant> apprenants) {
-        this.apprenants = apprenants;
     }
 
     public OrdreRepartition getOrdreRepartition() {

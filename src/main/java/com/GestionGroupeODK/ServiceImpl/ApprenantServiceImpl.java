@@ -29,7 +29,6 @@ public class ApprenantServiceImpl implements ApprenantService {
         updateApprenant.setPrenom(apprenant.getPrenom());
         updateApprenant.setEmail(apprenant.getEmail());
         updateApprenant.setTel(apprenant.getTel());
-        updateApprenant.setRepartition(apprenant.getRepartition());
 
         return apprenantRepository.save(updateApprenant);
     }

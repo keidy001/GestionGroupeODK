@@ -19,11 +19,8 @@ public class Apprenant implements Serializable {
     private String email;
     @Column(nullable = false)
     private int tel;
-    @ManyToMany
-    @JoinTable(name = "groupe")
-    private Collection<Repartition> repartition;
-    @ManyToOne
-    Groupe groupe;
+    @ManyToMany(mappedBy = "apprenant", cascade =CascadeType.ALL)
+    Collection<Groupe> groupe;
     public Apprenant() {
     }
 
@@ -67,19 +64,12 @@ public class Apprenant implements Serializable {
         this.tel = tel;
     }
 
-    public Collection<Repartition> getRepartition() {
-        return repartition;
-    }
 
-    public void setRepartition(Collection<Repartition> repartition) {
-        this.repartition = repartition;
-    }
-
-    public Groupe getGroupe() {
+    public Collection<Groupe> getGroupe() {
         return groupe;
     }
 
-    public void setGroupe(Groupe groupe) {
+    public void setGroupe(Collection<Groupe> groupe) {
         this.groupe = groupe;
     }
 
