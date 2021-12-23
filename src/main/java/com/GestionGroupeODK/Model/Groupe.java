@@ -1,5 +1,7 @@
 package com.GestionGroupeODK.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.lang.reflect.Type;
@@ -16,6 +18,7 @@ public class Groupe implements Serializable {
     @ManyToMany(cascade =CascadeType.ALL)
     @JoinTable(name = "listGroupe")
     private Collection<Apprenant> apprenant;
+
     @ManyToOne(cascade=CascadeType.ALL )
     private Repartition repartition;
     public Groupe() {

@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin
 @RestController
 @RequestMapping("api/")
@@ -17,9 +19,9 @@ public class RepartitionController {
     public String saveRepartition(@RequestBody Repartition repartition) {
         return repartitionService.saveRepartition(repartition);
     }
-
-    public Repartition allRepartition(Repartition repartition) {
-        return repartitionService.allRepartition(repartition);
+    @GetMapping("liste")
+    public List<Repartition> allRepartition() {
+        return repartitionService.allRepartition();
     }
 
     public Repartition updateRepartition(Repartition repartition, Long id) {

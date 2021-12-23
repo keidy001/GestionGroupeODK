@@ -1,5 +1,7 @@
 package com.GestionGroupeODK.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
@@ -14,12 +16,12 @@ public class Repartition implements Serializable {
     private String nom;
     @Column(nullable = false)
     private Date date;
-    private OrdreRepartition ordreRepartition;
-    private TypeRepartition typeRepartition;
+    private int ordre;
+    private int type;
     @Column(nullable = false)
     private int nombre;
     @OneToMany(mappedBy = "repartition",cascade=CascadeType.ALL)
-
+    @JsonIgnore
     private Collection<Groupe> groupe;
 
     public Repartition() {
@@ -57,20 +59,20 @@ public class Repartition implements Serializable {
         this.groupe = groupe;
     }
 
-    public OrdreRepartition getOrdreRepartition() {
-        return ordreRepartition;
+    public int getOrdre() {
+        return ordre;
     }
 
-    public void setOrdreRepartition(OrdreRepartition ordreRepartition) {
-        this.ordreRepartition = ordreRepartition;
+    public void setOrdre(int ordre) {
+        this.ordre = ordre;
     }
 
-    public TypeRepartition getTypeRepartition() {
-        return typeRepartition;
+    public int getType() {
+        return type;
     }
 
-    public void setTypeRepartition(TypeRepartition typeRepartition) {
-        this.typeRepartition = typeRepartition;
+    public void setType(int type) {
+        this.type = type;
     }
 
     public int getNombre() {

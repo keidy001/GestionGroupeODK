@@ -1,14 +1,10 @@
 package com.GestionGroupeODK.ServiceImpl;
 
-import com.GestionGroupeODK.Model.Apprenant;
-import com.GestionGroupeODK.Model.Groupe;
-import com.GestionGroupeODK.Model.Repartition;
-import com.GestionGroupeODK.Model.TypeRepartition;
+import com.GestionGroupeODK.Model.*;
 import com.GestionGroupeODK.Repository.ApprenantRepository;
 import com.GestionGroupeODK.Repository.GroupeRepository;
 import com.GestionGroupeODK.Repository.RepartitionRepository;
 import com.GestionGroupeODK.Service.RepartitionService;
-import org.aspectj.weaver.GeneratedReferenceTypeDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +12,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 
 @Service
 public class RepartitionServiceImpl implements RepartitionService {
@@ -33,30 +30,54 @@ public class RepartitionServiceImpl implements RepartitionService {
     @Override
     public String saveRepartition(Repartition repartition) {
 
-        //Listes des apprenants
+        //Listes aleatoire
         List<Apprenant> allApprenants = apprenantRepository.findAll();
+            if (repartition.getOrdre()== 1){
+                System.out.println(repartition.getType());
+                System.out.println(repartition.getNombre());
+                System.out.println(allApprenants.size());
+                if(repartition.getType()==1) {
+                    List<List<Apprenant>> listGroupeGenetayed = IntStream.range(0, allApprenants.size())
+                            .boxed()
+                            .collect(Collectors.groupingBy(i -> i % repartition.getNombre()))
+                            .values()
+                            .stream()
+                            .map(j -> j.stream().map(allApprenants::get).collect(Collectors.toList()))
+                     .collect(Collectors.toList());
+                    for(int i = 0; i < repartition.getNombre(); i++)
+                    {
+                        Groupe groupe = new Groupe();
+                        groupe.setNum(i);
+                        groupe.setApprenant (listGroupeGenetayed.get(i));
+                        groupe.setRepartition(repartition);
+                        groupeRepository.save(groupe);
 
-        //Shuffle liste
-        Collections.shuffle(allApprenants);
+                    }
+                }
+                if (repartition.getType()==2){
+                    int nbre = allApprenants.size()/repartition.getNombre();
+                    System.out.println(nbre);
 
-        List<List<Apprenant>> listGroupeGenetayed = IntStream.range(0, allApprenants.size())
-                .boxed()
-                .collect(Collectors.groupingBy(i -> i % repartition.getNombre()))
-                .values()
-                .stream()
-                .map(il -> il.stream().map(allApprenants::get).collect(Collectors.toList()))
-                .collect(Collectors.toList());
+                        List<List<Apprenant>> listGroupeGenetayed = IntStream.range(0, allApprenants.size())
+                                .boxed()
+                                .collect(Collectors.groupingBy(i -> i % nbre))
+                                .values()
+                                .stream()
+                                .map(j -> j.stream().map(allApprenants::get).collect(Collectors.toList()))
+                                .collect(Collectors.toList());
+                    for(int i = 0; i < repartition.getNombre(); i++)
+                    {
+                        Groupe groupe = new Groupe();
+                        groupe.setNum(i);
+                        groupe.setApprenant (listGroupeGenetayed.get(i));
+                        groupe.setRepartition(repartition);
+                        groupeRepository.save(groupe);
 
-        for(int i = 0; i < repartition.getNombre(); i++)
-        {
-            Groupe groupe = new Groupe();
-            groupe.setNum(i);
-            groupe.setApprenant (listGroupeGenetayed.get(i));
-          groupe.setRepartition(repartition);
-            groupeRepository.save(groupe);
-            groupe.setRepartition(repartition);
+                    }
 
-        }
+                }
+
+            }
             repartitionRepository.save(repartition);
          return "Success";
     }
@@ -95,8 +116,9 @@ public class RepartitionServiceImpl implements RepartitionService {
 
 
     @Override
-    public Repartition allRepartition(Repartition repartition) {
-        return null;
+    public List<Repartition> allRepartition() {
+
+        return repartitionRepository.findAll();
     }
 
     @Override
