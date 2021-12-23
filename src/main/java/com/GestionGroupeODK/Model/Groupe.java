@@ -1,6 +1,7 @@
 package com.GestionGroupeODK.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,12 +15,13 @@ public class Groupe implements Serializable {
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long idGroupe;
     private int num;
-    private String tache;
     @ManyToMany(cascade =CascadeType.ALL)
+    @JsonIgnore
     @JoinTable(name = "listGroupe")
     private Collection<Apprenant> apprenant;
-
+    @JsonManagedReference
     @ManyToOne(cascade=CascadeType.ALL )
+    @JsonIgnore
     private Repartition repartition;
     public Groupe() {
     }
@@ -40,13 +42,7 @@ public class Groupe implements Serializable {
         this.num = num;
     }
 
-    public String getTache() {
-        return tache;
-    }
 
-    public void setTache(String tache) {
-        this.tache = tache;
-    }
 
     public Collection<Apprenant> getApprenant() {
         return apprenant;

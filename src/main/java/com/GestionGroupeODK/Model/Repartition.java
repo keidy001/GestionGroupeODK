@@ -1,5 +1,6 @@
 package com.GestionGroupeODK.Model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -21,7 +22,7 @@ public class Repartition implements Serializable {
     @Column(nullable = false)
     private int nombre;
     @OneToMany(mappedBy = "repartition",cascade=CascadeType.ALL)
-    @JsonIgnore
+    @JsonBackReference
     private Collection<Groupe> groupe;
 
     public Repartition() {

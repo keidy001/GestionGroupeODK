@@ -7,6 +7,7 @@ import com.GestionGroupeODK.Repository.RepartitionRepository;
 import com.GestionGroupeODK.Service.RepartitionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.Collections;
 import java.util.List;
@@ -53,6 +54,7 @@ public class RepartitionServiceImpl implements RepartitionService {
                         groupeRepository.save(groupe);
 
                     }
+                    repartitionRepository.save(repartition);
                 }
                 if (repartition.getType()==2){
                     int nbre = allApprenants.size()/repartition.getNombre();
@@ -74,12 +76,12 @@ public class RepartitionServiceImpl implements RepartitionService {
                         groupeRepository.save(groupe);
 
                     }
-
+                    repartitionRepository.save(repartition);
                 }
 
+
             }
-            repartitionRepository.save(repartition);
-         return "Success";
+        return "Error";
     }
 
       /*  public String saveRepartition(Repartition repartition) {

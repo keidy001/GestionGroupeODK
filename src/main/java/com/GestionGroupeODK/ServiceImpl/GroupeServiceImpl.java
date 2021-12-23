@@ -6,7 +6,10 @@ import com.GestionGroupeODK.Repository.GroupeRepository;
 import com.GestionGroupeODK.Repository.RepartitionRepository;
 import com.GestionGroupeODK.Service.GroupeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
+@Service
 public class GroupeServiceImpl implements GroupeService {
 @Autowired
     GroupeRepository groupeRepository;
@@ -21,8 +24,8 @@ public class GroupeServiceImpl implements GroupeService {
     }
 
     @Override
-    public Groupe allGroupe(Groupe groupe) {
-        return null;
+    public List<Groupe> allGroupe(Groupe groupe) {
+        return groupeRepository.findAll();
     }
 
     @Override
@@ -39,4 +42,11 @@ public class GroupeServiceImpl implements GroupeService {
     public Groupe getGroupeById(Long id) {
         return null;
     }
+
+    @Override
+    public List<Groupe> findGroupeByRepartition(Groupe groupe) {
+
+        return groupeRepository.findByRepartition(groupe);
+    }
+
 }

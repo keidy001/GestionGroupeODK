@@ -44,4 +44,6 @@ public Apprenant updateApprenant(Apprenant apprenant, Long id){
     public Apprenant getApprenantById(@PathVariable("id") Long id) {
         return apprenantService.getApprenantById(id);
     }
+
+
 }
