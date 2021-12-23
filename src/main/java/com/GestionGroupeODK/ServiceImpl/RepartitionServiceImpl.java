@@ -65,7 +65,7 @@ public class RepartitionServiceImpl implements RepartitionService {
                                 .stream()
                                 .map(j -> j.stream().map(allApprenants::get).collect(Collectors.toList()))
                                 .collect(Collectors.toList());
-                    for(int i = 0; i < repartition.getNombre(); i++)
+                    for(int i = 0; i < nbre; i++)
                     {
                         Groupe groupe = new Groupe();
                         groupe.setNum(i);
